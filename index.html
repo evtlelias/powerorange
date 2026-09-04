@@ -238,8 +238,7 @@ const CONFIG = {
 
   // --- Bank ---
   bank: {
-    name: "",   // Kontoinhaber, z.B. "Max Mustermann"
-    iban: "",   // z.B. "DE02100100100152517108"
+    iban: "DE22120300001210578652",   // z.B. "DE02100100100152517108"
     purpose: "Spritkasse"
   },
 
@@ -248,7 +247,10 @@ const CONFIG = {
   lightningAddress: "",
 
   // --- Bitcoin on-chain Adresse (optional, eher fürs Prinzip) ---
-  btcAddress: ""
+  btcAddress: "bc1qc6wzw83ze2hsua5d8htgy8m8h6qdhnkl2vkj0y",
+
+  // --- doge
+  dogeAddress: "D8vvy1mCg61mVLJGbLLbLEfpCPgaGEML76"
 };
 
 /* ====================================================================== */
@@ -308,30 +310,32 @@ if (CONFIG.bank && CONFIG.bank.iban) {
     name: "Überweisung",
     tag: "keine Gebühren",
     valueText: b.iban,
-    note: `IBAN kopieren und in der Banking-App überweisen. Verwendungszweck: „${b.purpose}".`
+    note: ` `
   });
 }
 
-// --- Lightning ---
-if (CONFIG.lightningAddress) {
-  makeCopyCard({
-    name: "Bitcoin (Lightning)",
-    tag: "fast keine Gebühr",
-    valueText: CONFIG.lightningAddress,
-    note: "In einer Lightning-fähigen Wallet als Empfänger einfügen, z.B. Wallet of Satoshi oder Muun."
-  });
-}
 
 // --- BTC on-chain ---
 if (CONFIG.btcAddress) {
   makeLinkCard({
     name: "Bitcoin (on-chain)",
-    tag: "eher fürs Prinzip",
+    tag: "ohne KYC",
     href: "bitcoin:" + CONFIG.btcAddress,
     valueText: CONFIG.btcAddress,
-    note: "Netzwerkgebühr kann bei kleinen Beträgen ins Gewicht fallen — Lightning ist meist die bessere Wahl."
+    note: ""
   });
 }
+
+// --- Doge ---
+if (CONFIG.dogeAddress) {
+  makeCopyCard({
+    name: "Dogecoin",
+    tag: "wow",
+    valueText: CONFIG.dogeAddress,
+    note: ""
+  });
+}
+
 
 if (cardCount === 0) {
   methodsEl.innerHTML = '<div class="empty-state">Noch keine Zahlungsoption eingetragen. Trag deine Daten oben im CONFIG-Objekt in index.html ein.</div>';
