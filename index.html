@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spritkasse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  /* ====================================================================
+     KONFIGURATION — weiter unten im <script>-Block, im CONFIG-Objekt.
+     Leer lassen ("") blendet die jeweilige Karte automatisch aus.
+     ==================================================================== */
+
+  :root {
+    --ink: #1B1D21;
+    --paper: #EDEAE7;
+    --amber: #F2A93B;
+    --steel: #5B6770;
+    --line: #D8D4CC;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--ink);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px 64px;
+  }
+
+  .sheet {
+    width: 100%;
+    max-width: 420px;
+    background: var(--paper);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6);
+  }
+
+  /* ---------- Header ---------- */
+
+  .header {
+    background: var(--ink);
+    padding: 28px 28px 24px;
+  }
+
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--paper);
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+  }
+
+  .lede {
+    color: #B7BCC0;
+    font-size: 14.5px;
+    line-height: 1.5;
+    margin: 0;
+    max-width: 30ch;
+  }
+
+  /* ---------- Body ---------- */
+
+  .body {
+    padding: 26px 24px 28px;
+  }
+
+  .cash-note {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 22px;
+  }
+
+  .cash-note .coin {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+
+  .cash-note p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--steel);
+  }
+
+  .section-label {
+    font-size: 13px;
+    color: var(--steel);
+    margin: 0 0 14px;
+  }
+
+  /* ---------- Payment links ---------- */
+
+  .method {
+    display: block;
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease, transform 0.1s ease;
+  }
+
+  .method:last-child { margin-bottom: 0; }
+
+  .method:active { transform: scale(0.98); border-color: var(--amber); }
+
+  .method-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .method-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 15.5px;
+  }
+
+  .method-tag {
+    font-size: 11px;
+    color: var(--steel);
+    background: var(--paper);
+    padding: 3px 8px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+
+  .method-value {
+    margin-top: 6px;
+    font-size: 12.5px;
+    font-family: ui-monospace, 'SF Mono', monospace;
+    color: var(--steel);
+    word-break: break-all;
+  }
+
+  .method-note {
+    font-size: 12px;
+    color: var(--steel);
+    margin: 8px 0 0;
+    line-height: 1.5;
+  }
+
+  .copy-btn {
+    display: inline-block;
+    margin-top: 10px;
+    border: none;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 11.5px;
+    font-weight: 500;
+    padding: 7px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .copy-btn:active { background: var(--amber); }
+
+  /* ---------- Footer ---------- */
+
+  .footer {
+    text-align: center;
+    padding: 22px 24px 6px;
+    font-size: 12px;
+    color: var(--steel);
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--steel);
+    font-size: 13.5px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+  <div class="header">
+    <h1>Spritkasse</h1>
+    <p class="lede">Für alle, die mitfahren. Bar direkt rein, sonst hier entlang.</p>
+  </div>
+
+  <div class="body">
+
+    <div class="cash-note">
+      <span class="coin">¢</span>
+      <p>Münzen und Scheine wandern einfach in die Dose im Auto. Für alles andere: eine der Optionen unten antippen.</p>
+    </div>
+
+    <p class="section-label">Bargeldlos</p>
+
+    <div id="methods"></div>
+
+    <div class="footer">Danke fürs Auffüllen.</div>
+  </div>
+</div>
+
+<script>
+/* ======================================================================
+   KONFIGURATION
+   Trag hier deine echten Daten ein. Jede leer gelassene Zeile ("")
+   blendet die entsprechende Karte automatisch aus.
+   ====================================================================== */
+
+const CONFIG = {
+
+  // --- PayPal ---
+  // Dein PayPal.me-Link, z.B. "https://paypal.me/deinname"
+  paypal: "",
+
+  // --- Bank ---
+  bank: {
+    name: "",   // Kontoinhaber, z.B. "Max Mustermann"
+    iban: "",   // z.B. "DE02100100100152517108"
+    purpose: "Spritkasse"
+  },
+
+  // --- Lightning-Adresse (empfohlen für BTC, siehe Chat-Erklärung) ---
+  // sieht aus wie eine E-Mail, z.B. "deinname@walletofsatoshi.com"
+  lightningAddress: "",
+
+  // --- Bitcoin on-chain Adresse (optional, eher fürs Prinzip) ---
+  btcAddress: ""
+};
+
+/* ====================================================================== */
+
+const methodsEl = document.getElementById('methods');
+let cardCount = 0;
+
+function makeLinkCard({ name, tag, href, valueText, note }) {
+  cardCount++;
+  const a = document.createElement('a');
+  a.className = 'method';
+  a.href = href;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.innerHTML = `
+    <div class="method-head">
+      <span class="method-name">${name}</span>
+      <span class="method-tag">${tag}</span>
+    </div>
+    ${valueText ? `<div class="method-value">${valueText}</div>` : ''}
+    ${note ? `<p class="method-note">${note}</p>` : ''}
+  `;
+  methodsEl.appendChild(a);
+}
+
+function makeCopyCard({ name, tag, valueText, note }) {
+  cardCount++;
+  const div = document.createElement('div');
+  div.className = 'method';
+  div.innerHTML = `
+    <div class="method-head">
+      <span class="method-name">${name}</span>
+      <span class="method-tag">${tag}</span>
+    </div>
+    <div class="method-value">${valueText}</div>
+    ${note ? `<p class="method-note">${note}</p>` : ''}
+    <button class="copy-btn" data-copy="${valueText.replace(/"/g,'&quot;')}">Kopieren</button>
+  `;
+  methodsEl.appendChild(div);
+}
+
+// --- PayPal ---
+if (CONFIG.paypal) {
+  makeLinkCard({
+    name: "PayPal",
+    tag: "am schnellsten",
+    href: CONFIG.paypal,
+    valueText: "",
+    note: "Antippen, PayPal öffnet sich direkt."
+  });
+}
+
+// --- Bank ---
+if (CONFIG.bank && CONFIG.bank.iban) {
+  const b = CONFIG.bank;
+  makeCopyCard({
+    name: "Überweisung",
+    tag: "keine Gebühren",
+    valueText: b.iban,
+    note: `IBAN kopieren und in der Banking-App überweisen. Verwendungszweck: „${b.purpose}".`
+  });
+}
+
+// --- Lightning ---
+if (CONFIG.lightningAddress) {
+  makeCopyCard({
+    name: "Bitcoin (Lightning)",
+    tag: "fast keine Gebühr",
+    valueText: CONFIG.lightningAddress,
+    note: "In einer Lightning-fähigen Wallet als Empfänger einfügen, z.B. Wallet of Satoshi oder Muun."
+  });
+}
+
+// --- BTC on-chain ---
+if (CONFIG.btcAddress) {
+  makeLinkCard({
+    name: "Bitcoin (on-chain)",
+    tag: "eher fürs Prinzip",
+    href: "bitcoin:" + CONFIG.btcAddress,
+    valueText: CONFIG.btcAddress,
+    note: "Netzwerkgebühr kann bei kleinen Beträgen ins Gewicht fallen — Lightning ist meist die bessere Wahl."
+  });
+}
+
+if (cardCount === 0) {
+  methodsEl.innerHTML = '<div class="empty-state">Noch keine Zahlungsoption eingetragen. Trag deine Daten oben im CONFIG-Objekt in index.html ein.</div>';
+}
+
+// --- copy buttons ---
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('copy-btn')) {
+    navigator.clipboard.writeText(e.target.dataset.copy).then(() => {
+      const original = e.target.textContent;
+      e.target.textContent = 'Kopiert';
+      setTimeout(() => { e.target.textContent = original; }, 1200);
+    });
+  }
+});
+</script>
+</body>
+</html>
