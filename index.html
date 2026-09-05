@@ -217,7 +217,7 @@
 
     <div id="methods"></div>
 
-    <div class="footer">kuss auf die nuss</div>
+    <div class="footer" id="footerLine"></div>
   </div>
 </div>
 
@@ -316,8 +316,8 @@ if (CONFIG.bank && CONFIG.bank.iban) {
 // --- BTC on-chain ---
 if (CONFIG.btcAddress) {
   makeLinkCard({
-    name: "Bitcoin (on-chain)",
-    tag: "ohne KYC",
+    name: "Bitcoin",
+    tag: "on Chain",
     href: "bitcoin:" + CONFIG.btcAddress,
     valueText: CONFIG.btcAddress,
     note: ""
@@ -333,6 +333,22 @@ if (CONFIG.dogeAddress) {
     note: ""
   });
 }
+
+
+// --- zufälliger Footer-Spruch ---
+const FOOTER_LINES = [
+  "Danke fürs Auffüllen.",
+  "kuss auf die nuss",
+  "Karma lädt auch.",
+  "Sonst gibt's Fußweg.",
+  "Strom ist keine Meinung.",
+  "Für den Akku, nicht für mich.",
+  "Radio läuft nicht von Luft.",
+  "Kein Cent, kein Sound."
+];
+document.getElementById('footerLine').textContent =
+  FOOTER_LINES[Math.floor(Math.random() * FOOTER_LINES.length)];
+ 
 
 
 if (cardCount === 0) {
