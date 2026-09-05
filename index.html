@@ -236,7 +236,7 @@ const CONFIG = {
 
   // --- Bank ---
   bank: {
-    iban: "maybe not",   // z.B. "DE02100100100152517108"
+    iban: "",   // z.B. "DE02100100100152517108"
     purpose: "Spritkasse"
   },
 
@@ -328,7 +328,7 @@ if (CONFIG.btcAddress) {
 if (CONFIG.dogeAddress) {
   makeCopyCard({
     name: "Dogecoin",
-    tag: "wow",
+    tag: "much wow",
     valueText: CONFIG.dogeAddress,
     note: ""
   });
